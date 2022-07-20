@@ -1,0 +1,10 @@
+<launch>
+<param name="cam1Topic" value="/camera1/color/image_raw"/>
+<param name="cam2Topic" value="/camera2/color/image_raw"/>
+<param name="cam3Topic" value="/camera3/color/image_raw"/>
+<param name="cam4Topic" value="/camera4/color/image_raw"/>
+<param name="goproTopic" value="/gopro/image_raw"/>
+
+  <node pkg="nmcl_ros" type="CameraSyncNode" name="CameraSyncNode" output="screen">
+  </node>
+</launch>

@@ -1,0 +1,15 @@
+<launch>
+
+ <param name="configFolder" value="$(find nmcl_ros)/config/"/>
+ <param name="scanFrontTopic" value="/scan_front"/>
+ <param name="scanRearTopic" value="/scan_rear"/>
+ <param name="mergedScanTopic" value="/scan_merged"/>
+ <param name="dumpFolder" value="/home/nickybones/data/MCL/Dump/"/>
+
+ <node pkg="nmcl_ros" type="LidarMergeNode" name="LidarMergeNode" output="screen">
+  </node>
+
+  <node pkg="data_processing" type="SyncLidarNode.py" name="SyncLidarNode" output="screen">
+  </node>
+
+</launch>

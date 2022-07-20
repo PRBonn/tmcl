@@ -1,0 +1,11 @@
+<launch>
+
+ <param name="goproTopic" value="/gopro/image_raw"/>
+ <param name="cameraTopic" value="/camera0/color/image_raw"/>
+ <param name="dumpNum" value="950"/>
+ <param name="dumpFolder" value="/home/nickybones/data/Text/Dump/"/>
+
+ <node pkg="data_processing" type="SyncGPandRSNode.py" name="SyncGPandRSNode" output="screen">
+  </node>
+
+</launch>

@@ -1,0 +1,12 @@
+<launch>
+
+
+<param name="cameraImgTopic" value="/d400/color/image_raw"/>
+<param name="textTopic" value="/text"/>
+<param name="textSpottingConfig" value="/home/nickybones/Code/YouBotMCL/ncore/data/config/textspotting.config"/>
+
+  <node pkg="nmcl_ros" type="TextRecoNode" name="TextRecoNode" output="screen">
+  </node>
+  
+  <!--<node pkg="rviz" type="rviz" name="rviz" args="-d $(find nmcl_ros)/rviz/humanmask.rviz"/>-->
+</launch>

@@ -1,0 +1,40 @@
+<launch>
+
+<!-- Localization engine -->
+
+  <arg name="tracking" value="false"/>
+
+  <node pkg="data_processing" type="AMCLEval.py" name="AMCLEval" output="screen">
+    <param name="poseTopic" value="amcl_pose"/>
+    <param name="picklePath" value="/home/nickybones/data/MCL/2021_12_08/Run3/gtmerged.pickle"/>
+    <param name="csvPath" value="/home/nickybones/data/iros2022/2021_12_08_Run3/amcl/Run11/poseestimation.csv"/>
+  </node>
+   
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find data_processing)/rviz/amcl.rviz"/>
+
+  <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+  <param name="destination_frame" value="base_link"/>
+  <param name="cloud_destination_topic" value="/merged_cloud"/>
+  <param name="scan_destination_topic" value="/scan_multi"/>
+  <param name="laserscan_topics" value ="/scan_front /scan_rear" /> 
+  </node>
+
+   <node pkg="tf" type="static_transform_publisher" name="scan_front_tf_broadcaster" args="0.25 0.155 0.05 0 0 0.38249949 0.9239556 base_link front_laser_link 100" />
+    <node pkg="tf" type="static_transform_publisher" name="scan_rear_tf_broadcaster" args="-0.25 -0.155 0.05 0 0 0.9239556 -0.38249949 base_link rear_laser_link 100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_tf_broadcaster" args="0 0 0 0 0 0 1 base_footprint base_link 100" />
+
+    <node name="map_server" pkg="map_server" type="map_server" args="/home/nickybones/Code/YouBotMCL/ncore/data/floor/Faro/FMap.yaml" output="screen"/>
+
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+    <remap from="/scan" to="/scan_multi" />
+    <param name="update_min_d" value="0.05"/>
+    <param name="update_min_a" value="0.05"/>
+    <param name="min_particles" value="10000"/>
+<!--
+    <param name="initial_pose_x" value="-11.72" if="$(arg tracking)"/> 
+    <param name="initial_pose_y" value="-3.97" if="$(arg tracking)"/> 
+    <param name="initial_pose_a" value="0.0" if="$(arg tracking)"/> 
+-->
+  </node>
+
+</launch>

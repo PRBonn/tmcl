@@ -1,0 +1,4 @@
+data/*.yaml filter=lfs diff=lfs merge=lfs -text
+data/*.bin filter=lfs diff=lfs merge=lfs -text
+data/*.pgm filter=lfs diff=lfs merge=lfs -text
+*.bin filter=lfs diff=lfs merge=lfs -text

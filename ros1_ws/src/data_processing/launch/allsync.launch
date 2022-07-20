@@ -1,0 +1,48 @@
+<launch>
+
+
+ <param name="configFolder" value="$(find nmcl_ros)/config/"/>
+ <param name="scanFrontTopic" value="/scan_front"/>
+ <param name="scanRearTopic" value="/scan_rear"/>
+ <param name="mergedScanTopic" value="/scan_merged"/>
+ <param name="dumpFolder" value="/home/nickybones/data/MCL/Dump/"/>
+
+
+ <node pkg="nmcl_ros" type="LidarMergeNode" name="LidarMergeNode" output="screen">
+  </node>
+
+  <node pkg="data_processing" type="SyncLidarNode.py" name="SyncLidarNode" output="screen">
+  </node>
+
+  <param name="odomTopic" value="/odom"/>
+  <node pkg="data_processing" type="OdomDumpNode.py" name="OdomDumpNode" output="screen">
+  </node> 
+
+
+  <node pkg="data_processing" type="CameraDumpNode.py" name="CameraDumpNode0" output="screen">
+    <param name="cameraTopic" value="/camera0/color/image_raw"/>
+     <param name="camName" value="camera0"/>
+  </node>
+
+   <node pkg="data_processing" type="CameraDumpNode.py" name="CameraDumpNode1" output="screen">
+    <param name="cameraTopic" value="/camera1/color/image_raw"/>
+     <param name="camName" value="camera1"/>
+  </node>
+
+  <node pkg="data_processing" type="CameraDumpNode.py" name="CameraDumpNode2" output="screen">
+    <param name="cameraTopic" value="/camera2/color/image_raw"/>
+     <param name="camName" value="camera2"/>
+  </node>
+
+  <node pkg="data_processing" type="CameraDumpNode.py" name="CameraDumpNode3" output="screen">
+    <param name="cameraTopic" value="/camera3/color/image_raw"/>
+     <param name="camName" value="camera3"/>
+  </node>
+
+
+   <node pkg="data_processing" type="CameraDumpNode.py" name="CameraDumpNode4" output="screen">
+    <param name="cameraTopic" value="/gopro/image_raw"/>
+     <param name="camName" value="gopro"/>
+  </node>
+
+</launch>

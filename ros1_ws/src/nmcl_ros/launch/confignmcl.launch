@@ -1,0 +1,56 @@
+<launch>
+
+<!-- Localization engine -->
+  <arg name="dataFolder"/>
+  <arg name="text" value="true"/>
+
+
+  <param name="dataFolder" value="$(arg dataFolder)"/>
+  <param name="scanTopic" value="/ScanMergeNode/scan_merged"/>
+  <param name="odomTopic" value="/odom"/>
+  <param name="mapTopic" value="map"/>
+  <param name="textTopic" value="/text"/>
+  <param name="dsFactor" value="1"/>
+  <param name="triggerDist" value="0.05"/>
+  <param name="triggerAngle" value="0.05"/>
+  <rosparam param="odomNoise">[0.02, 0.02, 0.02]</rosparam>
+  <rosparam param="odomWeights">[0.5, 0.5]</rosparam>
+    <param name="maskTopic" value="/uniMaskTopic"/>
+     <param name="poseTopic" value="/NMCLPose"/>
+
+   <node pkg="nmcl_ros" type="ScanMergeNode" name="ScanMergeNode" output="screen">
+   <param name="configFolder" value="$(find nmcl_ros)/config/"/>
+  <param name="scanFrontTopic" value="/scan_front"/>
+  <param name="scanRearTopic" value="/scan_rear"/>
+  </node>
+
+  <node pkg="nmcl_ros" type="ConfigNMCLNode" name="ConfigNMCLNode" output="screen">
+  </node>
+
+
+<!-- Text Soptting  -->
+
+<group if="$(arg text)">
+  <node pkg="nmcl_ros" type="TextRecoNode" name="TextRecoNode1" args="TextRecoNode1" output="screen">
+     <param name="cameraImgTopic" value="/camera1/color/image_raw"/>
+     <param name="textSpottingConfig" value="/home/nickybones/Code/OmniNMCL/ncore/data/config/textspotting.config"/>
+     <param name="textTopic" value="/text"/>
+     <param name="camID" value="1"/>
+  </node>
+   <node pkg="nmcl_ros" type="TextRecoNode" name="TextRecoNode3" args="TextRecoNode3" output="screen">
+     <param name="cameraImgTopic" value="/camera3/color/image_raw"/>
+     <param name="textSpottingConfig" value="/home/nickybones/Code/OmniNMCL/ncore/data/config/textspotting.config"/>
+     <param name="textTopic" value="/text"/>
+     <param name="camID" value="3"/>
+  </node>
+</group>
+ 
+
+<!-- visualization-->
+<group>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg dataFolder)FMap.yaml" output="screen"/>
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find nmcl_ros)/rviz/confignmcl.rviz"/>
+</group>
+
+
+</launch>
