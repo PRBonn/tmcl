@@ -1,0 +1,11 @@
+*.cmake
+CMakeCache.txt
+ros1_ws/src/legdetector_pyros/*
+ros1_ws/src/odom_eval/*
+nmcl/src/CMakeFiles/
+nmcl/tst/CMakeFiles/
+nmcl/CMakeFiles/
+ros1_ws/build/
+ncore/build/
+*__pycache__/
+*Makefile
