@@ -78,16 +78,16 @@ std::vector<int> PlaceRecognition::Match(const std::vector<std::string>& places)
 			std::size_t found = detectedPlaces[i].find(detectedPlaces[j]);
 			if (found != std::string::npos)
 			{
-				detectedPlaces.erase(detectedPlaces.begin() + found);
-				detections.erase(detections.begin() + found);
+				detectedPlaces.erase(detectedPlaces.begin() + j);
+				detections.erase(detections.begin() + j);
 			}
 			else
 			{
 				found = detectedPlaces[j].find(detectedPlaces[i]);
 				if (found != std::string::npos)
 				{
-					detectedPlaces.erase(detectedPlaces.begin() + found);
-					detections.erase(detections.begin() + found);
+					detectedPlaces.erase(detectedPlaces.begin() + i);
+					detections.erase(detections.begin() + i);
 				}
 			}
 		}
